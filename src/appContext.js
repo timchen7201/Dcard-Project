@@ -1,7 +1,7 @@
 import React from "react";
 
 const CityContext = React.createContext({
-  cityState: [],
+  cityState: "",
   cityDispatch: () => {},
 });
 

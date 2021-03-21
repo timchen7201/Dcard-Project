@@ -72,7 +72,7 @@ export default function TaiwanMap() {
 
   const handleMouseOver = (e) => {
     const city_name = e.target.attributes.name.value;
-    console.log(city_name);
+    console.log(toSearchWord(city_name));
     setPointedCity(toChineseName(city_name));
   };
   const handleClicked = (e) => {

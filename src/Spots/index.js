@@ -3,25 +3,31 @@ import SpotCard from "../component/card";
 import { CityContext } from "../appContext";
 import request from "../utils/request";
 import InfiniteScroll from "react-infinite-scroll-component";
+// import InfiniteScroll from "react-infinite-scroller";
 
 function Spots() {
   const { cityState, cityDispatch } = useContext(CityContext);
   const [showAll, setShowAll] = useState(false);
+  const [showCity, setShowCity] = useState(false);
   const [showAllData, setShowAllData] = useState([]);
   const [showCityData, setShowCityData] = useState([]);
   const [loadcounter, setLoadCounter] = useState(1);
   useEffect(() => {
-    if (typeof cityState !== null) {
+    if (cityState !== null) {
       if (cityState === "all") {
+        console.log("first all");
         setShowAll(true);
+        setShowCity(false);
         request
-          .get("/ScenicSpot?$top=3&$format=JSON")
+          .get("/ScenicSpot?$top=30&$format=JSON")
           .then(({ data }) => setShowAllData(data));
         setLoadCounter(1);
-      } else {
+      } else if (cityState.length !== 0) {
+        console.log("first else");
         setShowAll(false);
+        setShowCity(true);
         request
-          .get(`/ScenicSpot/${cityState}?$top=3&$format=JSON`)
+          .get(`/ScenicSpot/${cityState}?$top=30&$format=JSON`)
           .then(({ data }) => setShowCityData(data));
         setLoadCounter(1);
       }
@@ -34,16 +40,22 @@ function Spots() {
     setLoadCounter(new_count);
     if (cityState === "all") {
       setShowAll(true);
-      request
-        .get(`/ScenicSpot?$top=${3 * new_count}&$format=JSON`)
-        .then(({ data }) => setShowAllData(data));
-    } else {
+      console.log("all", new_count);
+      setTimeout(() => {
+        request
+          .get(`/ScenicSpot?$top=${30 * new_count}&$format=JSON`)
+          .then(({ data }) => setShowAllData(data));
+      }, 1500);
+    } else if (cityState.length !== 0) {
       setShowAll(false);
+      console.log("else-", new_count);
+
       request
-        .get(`/ScenicSpot/${cityState}?$top=${3 * new_count}&$format=JSON`)
+        .get(`/ScenicSpot/${cityState}?$top=${30 * new_count}&$format=JSON`)
         .then(({ data }) => setShowCityData(data));
     }
   };
+
   return showAll ? (
     <section className="container mt-5">
       <InfiniteScroll
@@ -75,13 +87,13 @@ function Spots() {
         </div>
       </InfiniteScroll>
     </section>
-  ) : (
+  ) : showCity ? (
     <section className="container mt-5">
       <InfiniteScroll
         dataLength={showCityData.length}
         next={fetchMoreData}
         hasMore={true || false}
-        loader={<h4>Loading...</h4>}
+        loader={<h4>Loading....</h4>}
       >
         <div className="row">
           {showCityData.map((spot) => {
@@ -106,6 +118,8 @@ function Spots() {
         </div>
       </InfiniteScroll>
     </section>
+  ) : (
+    <div></div>
   );
 }
 
