@@ -16,11 +16,18 @@ function Spots() {
     if (cityState !== null) {
       if (cityState === "all") {
         console.log("first all");
+        try {
+          request.get("/ScenicSpot?$top=30&$format=JSON").then((response) => {
+            console.log(response);
+            const { data } = response;
+            setShowAllData(data);
+          });
+        } catch (error) {
+          alert("資料過載");
+          console.log(error.response.status);
+        }
         setShowAll(true);
         setShowCity(false);
-        request
-          .get("/ScenicSpot?$top=30&$format=JSON")
-          .then(({ data }) => setShowAllData(data));
         setLoadCounter(1);
       } else if (cityState.length !== 0) {
         console.log("first else");

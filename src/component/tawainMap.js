@@ -93,6 +93,7 @@ export default function TaiwanMap() {
           onLocationMouseOut={() => {
             setPointedCity();
           }}
+          className="svg-map map-content"
         />
       </div>
     </div>
