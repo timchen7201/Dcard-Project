@@ -2,13 +2,14 @@ import { React, useContext, useState } from "react";
 import Map from "../component/tawainMap";
 import { Button } from "react-bootstrap";
 import { CityContext } from "../appContext";
+import AnchorLink from "react-anchor-link-smooth-scroll";
 
 function Panel() {
   const { cityState, cityDispatch } = useContext(CityContext);
   const [cityOption, setCityOption] = useState(false);
 
   return (
-    <section className="container">
+    <section className="container" id="panel">
       <div className="row">
         <div className="col-lg-6 text-center">
           <div>
@@ -19,14 +20,16 @@ function Panel() {
             className="space-around text-center mt-3"
             style={{ width: "300px" }}
           >
-            <Button
-              variant="primary"
-              onClick={() => {
-                cityDispatch("all");
-              }}
-            >
-              全縣市
-            </Button>
+            <AnchorLink href="#spots">
+              <Button
+                variant="primary"
+                onClick={() => {
+                  cityDispatch("all");
+                }}
+              >
+                全縣市
+              </Button>
+            </AnchorLink>
             <Button
               variant="primary"
               onClick={() => {
@@ -42,11 +45,7 @@ function Panel() {
             <Map />
           ) : (
             <div className="block">
-              <img
-                src="https://i.imgur.com/JQnPalI.jpg"
-                width="100%"
-                height="100%"
-              ></img>
+              <img src="assets/img/taiwan.jpg" width="100%" height="100%"></img>
             </div>
           )}
         </div>

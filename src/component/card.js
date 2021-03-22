@@ -60,7 +60,7 @@ export default function SpotCard({
       <CardHeader title={Name} subheader={Address} />
       <CardMedia
         className={classes.media}
-        image={Picture ? Picture : "https://i.imgur.com/WnqAyvj.jpg"}
+        image={Picture ? Picture : "assets/img/No_Image_Available.jpg"} //https://i.imgur.com/WnqAyvj.jpg
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
@@ -72,14 +72,12 @@ export default function SpotCard({
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
           <a
-            href={`https://www.google.com/maps/search/?api=1&query=${Position.PositionLat},${Position.PositionLon}`}
+            target={`https://www.google.com/maps/search/?api=1&query=${Position.PositionLat},${Position.PositionLon}`}
           >
             <Map />
           </a>
         </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
+
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
@@ -92,7 +90,7 @@ export default function SpotCard({
         </IconButton>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent className="card-overflow-content">
+        <CardContent className="">
           <Typography paragraph>{DescriptionDetail}</Typography>
         </CardContent>
       </Collapse>

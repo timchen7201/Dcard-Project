@@ -31,44 +31,61 @@ function Spots() {
         setLoadCounter(1);
       } else if (cityState.length !== 0) {
         console.log("first else");
+        try {
+          request
+            .get(`/ScenicSpot/${cityState}?$top=30&$format=JSON`)
+            .then(({ data }) => setShowCityData(data));
+        } catch (error) {
+          console.log(error.response.status);
+        }
         setShowAll(false);
         setShowCity(true);
-        request
-          .get(`/ScenicSpot/${cityState}?$top=30&$format=JSON`)
-          .then(({ data }) => setShowCityData(data));
         setLoadCounter(1);
       }
     }
     return () => {};
   }, [cityState]);
 
+  useEffect(() => {
+    if (showAll === true || showCity === true) {
+      const anchor = document.getElementById("spots");
+      setTimeout(() => {
+        anchor.scrollIntoView({ behavior: "smooth" });
+      }, 500);
+    }
+    return () => {};
+  }, [showAll, showCity, cityState]);
+
   const fetchMoreData = () => {
     const new_count = loadcounter + 1;
     setLoadCounter(new_count);
     if (cityState === "all") {
       setShowAll(true);
-      console.log("all", new_count);
-      setTimeout(() => {
+      try {
         request
           .get(`/ScenicSpot?$top=${30 * new_count}&$format=JSON`)
           .then(({ data }) => setShowAllData(data));
-      }, 1500);
+      } catch (error) {
+        console.log(error);
+      }
     } else if (cityState.length !== 0) {
       setShowAll(false);
-      console.log("else-", new_count);
-
-      request
-        .get(`/ScenicSpot/${cityState}?$top=${30 * new_count}&$format=JSON`)
-        .then(({ data }) => setShowCityData(data));
+      try {
+        request
+          .get(`/ScenicSpot/${cityState}?$top=${30 * new_count}&$format=JSON`)
+          .then(({ data }) => setShowCityData(data));
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
   return showAll ? (
-    <section className="container mt-5">
+    <section className="container mt-5" id="spots">
       <InfiniteScroll
         dataLength={showAllData.length}
         next={fetchMoreData}
-        hasMore={true || false}
+        hasMore={true}
         loader={<h4>Loading...</h4>}
       >
         <div className="row">
@@ -95,11 +112,11 @@ function Spots() {
       </InfiniteScroll>
     </section>
   ) : showCity ? (
-    <section className="container mt-5">
+    <section className="container mt-5" id="spots">
       <InfiniteScroll
         dataLength={showCityData.length}
         next={fetchMoreData}
-        hasMore={true || false}
+        hasMore={true}
         loader={<h4>Loading....</h4>}
       >
         <div className="row">
