@@ -27,17 +27,20 @@ function Panel() {
                   cityDispatch("all");
                 }}
               >
-                全縣市
+                全縣市景點
               </Button>
             </AnchorLink>
-            <Button
-              variant="primary"
-              onClick={() => {
-                setCityOption((prev) => !prev);
-              }}
-            >
-              選擇單一縣市
-            </Button>
+            <AnchorLink href="">
+              <Button
+                variant="primary"
+                onClick={() => {
+                  // cityDispatch(null)
+                  setCityOption((prev) => !prev);
+                }}
+              >
+                選擇單一縣市
+              </Button>
+            </AnchorLink>
           </div>
         </div>
         <div className="col-lg-6">

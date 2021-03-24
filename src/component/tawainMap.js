@@ -48,7 +48,7 @@ const toChineseName = (city) => {
       return "台東縣";
     case "Lienchiang County":
       return "連江縣";
-    case "Chiayi County":
+    case "Chiayi City":
       return "嘉義市";
       // case "":
       //     return ''

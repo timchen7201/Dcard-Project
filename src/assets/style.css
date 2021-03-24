@@ -21,8 +21,8 @@ code {
   display: flex;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px;
+  margin-right: -10px;
+  margin-left: -1px;
 }
 
 .col-md-6 {
@@ -44,6 +44,7 @@ code {
   margin-left: auto;
   justify-content: space-between;
 }
+
 @media (min-width: 576px) {
   .container {
     max-width: 540px;
